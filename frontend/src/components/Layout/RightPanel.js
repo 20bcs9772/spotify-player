@@ -292,14 +292,14 @@ const AlgorithmsSection = ({ stagingPool, isExpanded, onToggle }) => {
   const setQueue = useStore(state => state.setQueue);
   const playTrack = useStore(state => state.playTrack);
 
-  const {
+  import {
     shuffleTracks,
     interleaveTracks,
     sortByReleaseDate,
     sortByPopularity,
     sortAlphabetically,
     extractAllTracks
-  } = require('../../utils/algorithms');
+  } from '../../utils/algorithms';
 
   const allTracks = extractAllTracks(stagingPool);
 
