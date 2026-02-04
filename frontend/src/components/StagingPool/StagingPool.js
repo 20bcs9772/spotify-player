@@ -130,7 +130,6 @@ export const StagingPool = () => {
               sensors={sensors}
               collisionDetection={closestCenter}
               onDragEnd={handleDragEnd}
-              modifiers={[restrictToVerticalAxis, restrictToParentElement]}
             >
               <SortableContext
                 items={stagingPool.map(item => item.id)}
