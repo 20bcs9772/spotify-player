@@ -101,3 +101,148 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Test the Spotify Combiner application comprehensively including login flow, search & add items, staging pool features, algorithms, queue view, player bar, responsive design, and overall design verification."
+
+frontend:
+  - task: "Login Page Design and Flow"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/Auth/LoginPage.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Initial assessment - needs testing for proper design and login functionality"
+
+  - task: "Search Panel with Tabs (Albums, Artists, Playlists)"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/Search/SearchPanel.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Initial assessment - needs testing for search functionality and tab switching"
+
+  - task: "Add Items to Staging Pool"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/Search/SearchResult.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Initial assessment - needs testing for adding albums, artists, and playlists to staging pool"
+
+  - task: "Staging Pool Features (Count, Remove, Reorder)"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/StagingPool/StagingPool.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Initial assessment - needs testing for staging pool display, item count, track count, remove functionality, and drag handle visibility"
+
+  - task: "Algorithm Execution (Shuffle, Interleave, Sort by Date, Sort by Popularity)"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/ControlPanel/ControlPanel.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Initial assessment - needs testing for all algorithm buttons and queue generation with success toasts"
+
+  - task: "Queue View and Track Display"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/Queue/QueueView.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Initial assessment - needs testing for queue display, track info, album art, duration, and track selection for playback"
+
+  - task: "Player Bar Functionality"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/Layout/PlayerBar.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Initial assessment - needs testing for player bar display, current track info, play/pause, next/previous buttons, progress bar, and volume control"
+
+  - task: "Toast Notifications"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Initial assessment - needs testing for toast notifications when adding items and applying algorithms"
+
+  - task: "Responsive Design (Desktop 1920x1080)"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Initial assessment - needs testing for responsive layout on desktop viewport"
+
+  - task: "Spotify Dark Theme and Design"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/App.css"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Initial assessment - needs testing for Spotify-like dark theme, green accent color (#1DB954), proper spacing, layout, and icon visibility"
+
+metadata:
+  created_by: "testing_agent"
+  version: "1.0"
+  test_sequence: 1
+
+test_plan:
+  current_focus:
+    - "Login Page Design and Flow"
+    - "Search Panel with Tabs (Albums, Artists, Playlists)"
+    - "Add Items to Staging Pool"
+    - "Staging Pool Features (Count, Remove, Reorder)"
+    - "Algorithm Execution (Shuffle, Interleave, Sort by Date, Sort by Popularity)"
+    - "Queue View and Track Display"
+    - "Player Bar Functionality"
+  stuck_tasks: []
+  test_all: true
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "testing"
+    message: "Starting comprehensive testing of Spotify Combiner application. Will test all major functionality including login, search, staging pool, algorithms, queue, and player bar. Testing will be done on desktop viewport (1920x1080) as requested."
