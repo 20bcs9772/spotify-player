@@ -96,29 +96,29 @@ export const RightPanel = () => {
   const totalTracks = allTracks.length;
 
   return (
-    <div className=\"hidden xl:flex w-[420px] bg-spotify-dark rounded-lg flex-col h-full overflow-hidden\">
+    <div className="hidden xl:flex w-[420px] bg-spotify-dark rounded-lg flex-col h-full overflow-hidden">
       {/* Header */}
-      <div className=\"p-4 border-b border-spotify\">
-        <div className=\"flex items-center justify-between mb-2\">
-          <h2 className=\"font-bold text-white text-xl\">Combiner</h2>
+      <div className="p-4 border-b border-spotify">
+        <div className="flex items-center justify-between mb-2">
+          <h2 className="font-bold text-white text-xl">Combiner</h2>
           {stagingPool.length > 0 && (
             <Button
               onClick={clearStagingPool}
-              variant=\"ghost\"
-              size=\"sm\"
-              className=\"text-[#b3b3b3] hover:text-white h-8 px-2\"
+              variant="ghost"
+              size="sm"
+              className="text-[#b3b3b3] hover:text-white h-8 px-2"
             >
               Clear All
             </Button>
           )}
         </div>
-        <p className=\"text-xs text-[#b3b3b3]\">
+        <p className="text-xs text-[#b3b3b3]">
           {stagingPool.length} sources \u2022 {totalTracks} tracks
         </p>
       </div>
 
       <DragDropContext onDragEnd={handleDragEnd}>
-        <ScrollArea className=\"flex-1 pb-24\">
+        <ScrollArea className="flex-1 pb-24">
           {/* Staging Pool */}
           <StagingPoolSection
             stagingPool={stagingPool}
@@ -127,7 +127,7 @@ export const RightPanel = () => {
             onRemove={removeFromStagingPool}
           />
 
-          <Separator className=\"bg-[#282828]\" />
+          <Separator className="bg-[#282828]" />
 
           {/* Algorithms */}
           <AlgorithmsSection
@@ -136,7 +136,7 @@ export const RightPanel = () => {
             onToggle={() => toggleSection('algorithms')}
           />
 
-          <Separator className=\"bg-[#282828]\" />
+          <Separator className="bg-[#282828]" />
 
           {/* Filters */}
           <FiltersSection
@@ -145,7 +145,7 @@ export const RightPanel = () => {
             onToggle={() => toggleSection('filters')}
           />
 
-          <Separator className=\"bg-[#282828]\" />
+          <Separator className="bg-[#282828]" />
 
           {/* Queue */}
           <QueueSection
@@ -157,8 +157,8 @@ export const RightPanel = () => {
       </DragDropContext>
 
       {/* Bottom Action Buttons - Sticky */}
-      <div className=\"absolute bottom-0 left-0 right-0 p-4 bg-spotify-dark border-t border-spotify\">
-        <div className=\"grid grid-cols-2 gap-2\">
+      <div className="absolute bottom-0 left-0 right-0 p-4 bg-spotify-dark border-t border-spotify">
+        <div className="grid grid-cols-2 gap-2">
           <Button
             onClick={() => {
               if (stagingPool.length === 0) {
@@ -170,9 +170,9 @@ export const RightPanel = () => {
               toast.success(`Queue created with ${tracks.length} tracks`);
             }}
             disabled={stagingPool.length === 0}
-            className=\"h-12 bg-white hover:bg-gray-200 text-black font-bold rounded-full disabled:opacity-50\"
+            className="h-12 bg-white hover:bg-gray-200 text-black font-bold rounded-full disabled:opacity-50"
           >
-            <Plus className=\"w-5 h-5 mr-2\" />
+            <Plus className="w-5 h-5 mr-2" />
             Create
           </Button>
           <Button
@@ -185,9 +185,9 @@ export const RightPanel = () => {
               toast.success('Playing queue');
             }}
             disabled={queue.length === 0}
-            className=\"h-12 bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold rounded-full disabled:opacity-50\"
+            className="h-12 bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold rounded-full disabled:opacity-50"
           >
-            <Play className=\"w-5 h-5 mr-2 fill-current\" />
+            <Play className="w-5 h-5 mr-2 fill-current" />
             Play
           </Button>
         </div>
@@ -200,33 +200,33 @@ export const RightPanel = () => {
 const StagingPoolSection = ({ stagingPool, isExpanded, onToggle, onRemove }) => {
   return (
     <Collapsible open={isExpanded} onOpenChange={onToggle}>
-      <div className=\"p-4\">
-        <CollapsibleTrigger className=\"flex items-center justify-between w-full group\">
-          <div className=\"flex items-center gap-2\">
-            <h3 className=\"text-sm font-semibold text-white\">STAGING POOL</h3>
-            <span className=\"text-xs text-[#b3b3b3]\">({stagingPool.length})</span>
+      <div className="p-4">
+        <CollapsibleTrigger className="flex items-center justify-between w-full group">
+          <div className="flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-white">STAGING POOL</h3>
+            <span className="text-xs text-[#b3b3b3]">({stagingPool.length})</span>
           </div>
-          {isExpanded ? <ChevronDown className=\"w-4 h-4 text-[#b3b3b3]\" /> : <ChevronRight className=\"w-4 h-4 text-[#b3b3b3]\" />}
+          {isExpanded ? <ChevronDown className="w-4 h-4 text-[#b3b3b3]" /> : <ChevronRight className="w-4 h-4 text-[#b3b3b3]" />}
         </CollapsibleTrigger>
         
         <CollapsibleContent>
           {stagingPool.length === 0 ? (
-            <div className=\"text-center py-8 mt-4\">
-              <div className=\"w-16 h-16 mx-auto mb-3 rounded-full bg-[#232323] flex items-center justify-center\">
-                <Music2 className=\"w-8 h-8 text-[#b3b3b3]\" />
+            <div className="text-center py-8 mt-4">
+              <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-[#232323] flex items-center justify-center">
+                <Music2 className="w-8 h-8 text-[#b3b3b3]" />
               </div>
-              <p className=\"text-sm text-[#b3b3b3] mb-1\">Empty pool</p>
-              <p className=\"text-xs text-[#6a6a6a]\">Drag items here or click + to add</p>
+              <p className="text-sm text-[#b3b3b3] mb-1">Empty pool</p>
+              <p className="text-xs text-[#6a6a6a]">Drag items here or click + to add</p>
             </div>
           ) : (
-            <Droppable droppableId=\"staging-pool\">
+            <Droppable droppableId="staging-pool">
               {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                   className={cn(
-                    \"space-y-2 mt-4\",
-                    snapshot.isDraggingOver && \"bg-[#1DB954]/10 rounded-lg p-2\"
+                    "space-y-2 mt-4",
+                    snapshot.isDraggingOver && "bg-[#1DB954]/10 rounded-lg p-2"
                   )}
                 >
                   {stagingPool.map((item, index) => (
@@ -236,25 +236,25 @@ const StagingPoolSection = ({ stagingPool, isExpanded, onToggle, onRemove }) => 
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           className={cn(
-                            \"p-3 bg-[#181818] border-none hover:bg-[#282828] transition-colors\",
-                            snapshot.isDragging && \"opacity-50 shadow-2xl\"
+                            "p-3 bg-[#181818] border-none hover:bg-[#282828] transition-colors",
+                            snapshot.isDragging && "opacity-50 shadow-2xl"
                           )}
                         >
-                          <div className=\"flex items-center gap-2\">
-                            <div {...provided.dragHandleProps} className=\"cursor-grab active:cursor-grabbing\">
-                              <GripVertical className=\"w-4 h-4 text-[#b3b3b3] flex-shrink-0\" />
+                          <div className="flex items-center gap-2">
+                            <div {...provided.dragHandleProps} className="cursor-grab active:cursor-grabbing">
+                              <GripVertical className="w-4 h-4 text-[#b3b3b3] flex-shrink-0" />
                             </div>
                             <img
                               src={item.image}
                               alt={item.name}
                               className={cn(
-                                \"w-10 h-10 object-cover flex-shrink-0\",
+                                "w-10 h-10 object-cover flex-shrink-0",
                                 item.type === 'artist' ? 'rounded-full' : 'rounded-md'
                               )}
                             />
-                            <div className=\"flex-1 min-w-0\">
-                              <div className=\"text-sm font-medium text-white truncate\">{item.name}</div>
-                              <div className=\"text-xs text-[#b3b3b3] truncate\">
+                            <div className="flex-1 min-w-0">
+                              <div className="text-sm font-medium text-white truncate">{item.name}</div>
+                              <div className="text-xs text-[#b3b3b3] truncate">
                                 {item.type === 'album' && item.artist}
                                 {item.type === 'artist' && 'Artist'}
                                 {item.type === 'playlist' && `By ${item.owner}`}
@@ -265,11 +265,11 @@ const StagingPoolSection = ({ stagingPool, isExpanded, onToggle, onRemove }) => 
                                 onRemove(item.id);
                                 toast.success(`Removed ${item.name}`);
                               }}
-                              variant=\"ghost\"
-                              size=\"icon\"
-                              className=\"flex-shrink-0 h-8 w-8 text-[#b3b3b3] hover:text-white\"
+                              variant="ghost"
+                              size="icon"
+                              className="flex-shrink-0 h-8 w-8 text-[#b3b3b3] hover:text-white"
                             >
-                              <X className=\"w-4 h-4\" />
+                              <X className="w-4 h-4" />
                             </Button>
                           </div>
                         </Card>
@@ -324,58 +324,58 @@ const AlgorithmsSection = ({ stagingPool, isExpanded, onToggle }) => {
     {
       id: 'shuffle',
       name: 'Shuffle',
-      icon: <Shuffle className=\"w-5 h-5\" />,
+      icon: <Shuffle className="w-5 h-5" />,
       action: () => executeAlgorithm(() => shuffleTracks(allTracks), 'Shuffle'),
     },
     {
       id: 'interleave',
       name: 'Interleave',
-      icon: <ArrowUpDown className=\"w-5 h-5\" />,
+      icon: <ArrowUpDown className="w-5 h-5" />,
       action: () => executeAlgorithm(() => interleaveTracks(stagingPool), 'Interleave'),
       disabled: stagingPool.length < 2
     },
     {
       id: 'date',
       name: 'By Date',
-      icon: <Calendar className=\"w-5 h-5\" />,
+      icon: <Calendar className="w-5 h-5" />,
       action: () => executeAlgorithm(() => sortByReleaseDate(allTracks, false), 'Sort by Date'),
     },
     {
       id: 'popularity',
       name: 'By Popularity',
-      icon: <TrendingUp className=\"w-5 h-5\" />,
+      icon: <TrendingUp className="w-5 h-5" />,
       action: () => executeAlgorithm(() => sortByPopularity(allTracks, false), 'Sort by Popularity'),
     },
     {
       id: 'alphabetical',
       name: 'A-Z',
-      icon: <AlignLeft className=\"w-5 h-5\" />,
+      icon: <AlignLeft className="w-5 h-5" />,
       action: () => executeAlgorithm(() => sortAlphabetically(allTracks, true), 'Sort Alphabetically'),
     }
   ];
 
   return (
     <Collapsible open={isExpanded} onOpenChange={onToggle}>
-      <div className=\"p-4\">
-        <CollapsibleTrigger className=\"flex items-center justify-between w-full group\">
-          <h3 className=\"text-sm font-semibold text-white\">ALGORITHMS</h3>
-          {isExpanded ? <ChevronDown className=\"w-4 h-4 text-[#b3b3b3]\" /> : <ChevronRight className=\"w-4 h-4 text-[#b3b3b3]\" />}
+      <div className="p-4">
+        <CollapsibleTrigger className="flex items-center justify-between w-full group">
+          <h3 className="text-sm font-semibold text-white">ALGORITHMS</h3>
+          {isExpanded ? <ChevronDown className="w-4 h-4 text-[#b3b3b3]" /> : <ChevronRight className="w-4 h-4 text-[#b3b3b3]" />}
         </CollapsibleTrigger>
         
         <CollapsibleContent>
-          <div className=\"grid grid-cols-2 gap-2 mt-4\">
+          <div className="grid grid-cols-2 gap-2 mt-4">
             {algorithms.map((algo) => (
               <button
                 key={algo.id}
                 onClick={!algo.disabled ? algo.action : undefined}
                 disabled={algo.disabled}
                 className={cn(
-                  \"flex flex-col items-center gap-2 p-3 bg-[#181818] hover:bg-[#282828] rounded-md transition-colors\",
-                  algo.disabled && \"opacity-50 cursor-not-allowed hover:bg-[#181818]\"
+                  "flex flex-col items-center gap-2 p-3 bg-[#181818] hover:bg-[#282828] rounded-md transition-colors",
+                  algo.disabled && "opacity-50 cursor-not-allowed hover:bg-[#181818]"
                 )}
               >
-                <div className=\"text-[#1DB954]\">{algo.icon}</div>
-                <span className=\"text-xs font-medium text-white text-center\">{algo.name}</span>
+                <div className="text-[#1DB954]">{algo.icon}</div>
+                <span className="text-xs font-medium text-white text-center">{algo.name}</span>
               </button>
             ))}
           </div>
@@ -423,40 +423,40 @@ const FiltersSection = ({ allTracks, isExpanded, onToggle }) => {
 
   return (
     <Collapsible open={isExpanded} onOpenChange={onToggle}>
-      <div className=\"p-4\">
-        <CollapsibleTrigger className=\"flex items-center justify-between w-full group\">
-          <h3 className=\"text-sm font-semibold text-white\">FILTERS</h3>
-          {isExpanded ? <ChevronDown className=\"w-4 h-4 text-[#b3b3b3]\" /> : <ChevronRight className=\"w-4 h-4 text-[#b3b3b3]\" />}
+      <div className="p-4">
+        <CollapsibleTrigger className="flex items-center justify-between w-full group">
+          <h3 className="text-sm font-semibold text-white">FILTERS</h3>
+          {isExpanded ? <ChevronDown className="w-4 h-4 text-[#b3b3b3]" /> : <ChevronRight className="w-4 h-4 text-[#b3b3b3]" />}
         </CollapsibleTrigger>
         
         <CollapsibleContent>
-          <div className=\"mt-4\">
+          <div className="mt-4">
             <Dialog>
               <DialogTrigger asChild>
                 <Button 
-                  variant=\"outline\" 
-                  className=\"w-full h-10 bg-[#181818] border-[#282828] hover:bg-[#282828] text-white\"
+                  variant="outline" 
+                  className="w-full h-10 bg-[#181818] border-[#282828] hover:bg-[#282828] text-white"
                 >
-                  <Filter className=\"w-4 h-4 mr-2\" />
+                  <Filter className="w-4 h-4 mr-2" />
                   Configure Filters
                 </Button>
               </DialogTrigger>
-              <DialogContent className=\"bg-[#181818] border-[#282828] text-white max-w-md\">
+              <DialogContent className="bg-[#181818] border-[#282828] text-white max-w-md">
                 <DialogHeader>
-                  <DialogTitle className=\"text-xl font-bold\">Advanced Filters</DialogTitle>
-                  <DialogDescription className=\"text-[#b3b3b3]\">
+                  <DialogTitle className="text-xl font-bold">Advanced Filters</DialogTitle>
+                  <DialogDescription className="text-[#b3b3b3]">
                     Filter your queue based on genres, years, and more
                   </DialogDescription>
                 </DialogHeader>
-                <ScrollArea className=\"max-h-[60vh] pr-4\">
-                  <div className=\"space-y-6 py-4\">
+                <ScrollArea className="max-h-[60vh] pr-4">
+                  <div className="space-y-6 py-4">
                     {/* Genres */}
                     {availableGenres.length > 0 && (
                       <div>
-                        <Label className=\"mb-3 block text-white font-semibold\">Genres</Label>
-                        <div className=\"space-y-3 max-h-48 overflow-y-auto bg-[#121212] rounded-lg p-3\">
+                        <Label className="mb-3 block text-white font-semibold">Genres</Label>
+                        <div className="space-y-3 max-h-48 overflow-y-auto bg-[#121212] rounded-lg p-3">
                           {availableGenres.map((genre) => (
-                            <div key={genre} className=\"flex items-center space-x-2\">
+                            <div key={genre} className="flex items-center space-x-2">
                               <Checkbox
                                 id={genre}
                                 checked={selectedGenres.includes(genre)}
@@ -467,11 +467,11 @@ const FiltersSection = ({ allTracks, isExpanded, onToggle }) => {
                                     setSelectedGenres(selectedGenres.filter(g => g !== genre));
                                   }
                                 }}
-                                className=\"border-[#b3b3b3]\"
+                                className="border-[#b3b3b3]"
                               />
                               <label
                                 htmlFor={genre}
-                                className=\"text-sm font-medium text-white cursor-pointer flex-1\"
+                                className="text-sm font-medium text-white cursor-pointer flex-1"
                               >
                                 {genre}
                               </label>
@@ -483,12 +483,12 @@ const FiltersSection = ({ allTracks, isExpanded, onToggle }) => {
 
                     {/* Year Range */}
                     <div>
-                      <Label className=\"mb-3 block text-white font-semibold\">Year Range</Label>
-                      <div className=\"space-y-4 bg-[#121212] rounded-lg p-4\">
+                      <Label className="mb-3 block text-white font-semibold">Year Range</Label>
+                      <div className="space-y-4 bg-[#121212] rounded-lg p-4">
                         <div>
-                          <div className=\"flex justify-between mb-2\">
-                            <span className=\"text-sm text-[#b3b3b3]\">From</span>
-                            <span className=\"text-sm font-bold text-[#1DB954]\">{minYear[0]}</span>
+                          <div className="flex justify-between mb-2">
+                            <span className="text-sm text-[#b3b3b3]">From</span>
+                            <span className="text-sm font-bold text-[#1DB954]">{minYear[0]}</span>
                           </div>
                           <Slider
                             value={minYear}
@@ -496,13 +496,13 @@ const FiltersSection = ({ allTracks, isExpanded, onToggle }) => {
                             min={1950}
                             max={new Date().getFullYear()}
                             step={1}
-                            className=\"cursor-pointer\"
+                            className="cursor-pointer"
                           />
                         </div>
                         <div>
-                          <div className=\"flex justify-between mb-2\">
-                            <span className=\"text-sm text-[#b3b3b3]\">To</span>
-                            <span className=\"text-sm font-bold text-[#1DB954]\">{maxYear[0]}</span>
+                          <div className="flex justify-between mb-2">
+                            <span className="text-sm text-[#b3b3b3]">To</span>
+                            <span className="text-sm font-bold text-[#1DB954]">{maxYear[0]}</span>
                           </div>
                           <Slider
                             value={maxYear}
@@ -510,7 +510,7 @@ const FiltersSection = ({ allTracks, isExpanded, onToggle }) => {
                             min={1950}
                             max={new Date().getFullYear()}
                             step={1}
-                            className=\"cursor-pointer\"
+                            className="cursor-pointer"
                           />
                         </div>
                       </div>
@@ -518,11 +518,11 @@ const FiltersSection = ({ allTracks, isExpanded, onToggle }) => {
 
                     {/* Popularity */}
                     <div>
-                      <Label className=\"mb-3 block text-white font-semibold\">Minimum Popularity</Label>
-                      <div className=\"bg-[#121212] rounded-lg p-4\">
-                        <div className=\"flex justify-between mb-2\">
-                          <span className=\"text-sm text-[#b3b3b3]\">Threshold</span>
-                          <span className=\"text-sm font-bold text-[#1DB954]\">{minPopularity[0]}%</span>
+                      <Label className="mb-3 block text-white font-semibold">Minimum Popularity</Label>
+                      <div className="bg-[#121212] rounded-lg p-4">
+                        <div className="flex justify-between mb-2">
+                          <span className="text-sm text-[#b3b3b3]">Threshold</span>
+                          <span className="text-sm font-bold text-[#1DB954]">{minPopularity[0]}%</span>
                         </div>
                         <Slider
                           value={minPopularity}
@@ -530,23 +530,23 @@ const FiltersSection = ({ allTracks, isExpanded, onToggle }) => {
                           min={0}
                           max={100}
                           step={5}
-                          className=\"cursor-pointer\"
+                          className="cursor-pointer"
                         />
                       </div>
                     </div>
 
                     {/* Explicit Content */}
-                    <div className=\"bg-[#121212] rounded-lg p-4\">
-                      <div className=\"flex items-center space-x-3\">
+                    <div className="bg-[#121212] rounded-lg p-4">
+                      <div className="flex items-center space-x-3">
                         <Checkbox
-                          id=\"explicit\"
+                          id="explicit"
                           checked={excludeExplicit}
                           onCheckedChange={setExcludeExplicit}
-                          className=\"border-[#b3b3b3]\"
+                          className="border-[#b3b3b3]"
                         />
                         <label
-                          htmlFor=\"explicit\"
-                          className=\"text-sm font-medium text-white cursor-pointer\"
+                          htmlFor="explicit"
+                          className="text-sm font-medium text-white cursor-pointer"
                         >
                           Exclude explicit content
                         </label>
@@ -556,7 +556,7 @@ const FiltersSection = ({ allTracks, isExpanded, onToggle }) => {
                 </ScrollArea>
                 <Button 
                   onClick={handleApplyFilters} 
-                  className=\"w-full h-12 bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold\"
+                  className="w-full h-12 bg-[#1DB954] hover:bg-[#1ed760] text-black font-bold"
                 >
                   Apply Filters
                 </Button>
@@ -575,33 +575,33 @@ const QueueSection = ({ queue, isExpanded, onToggle }) => {
 
   return (
     <Collapsible open={isExpanded} onOpenChange={onToggle}>
-      <div className=\"p-4\">
-        <CollapsibleTrigger className=\"flex items-center justify-between w-full group\">
-          <div className=\"flex items-center gap-2\">
-            <h3 className=\"text-sm font-semibold text-white\">QUEUE</h3>
-            <span className=\"text-xs text-[#b3b3b3]\">({queue.length})</span>
+      <div className="p-4">
+        <CollapsibleTrigger className="flex items-center justify-between w-full group">
+          <div className="flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-white">QUEUE</h3>
+            <span className="text-xs text-[#b3b3b3]">({queue.length})</span>
           </div>
-          {isExpanded ? <ChevronDown className=\"w-4 h-4 text-[#b3b3b3]\" /> : <ChevronRight className=\"w-4 h-4 text-[#b3b3b3]\" />}
+          {isExpanded ? <ChevronDown className="w-4 h-4 text-[#b3b3b3]" /> : <ChevronRight className="w-4 h-4 text-[#b3b3b3]" />}
         </CollapsibleTrigger>
         
         <CollapsibleContent>
           {queue.length === 0 ? (
-            <div className=\"text-center py-8 mt-4\">
-              <div className=\"w-16 h-16 mx-auto mb-3 rounded-full bg-[#232323] flex items-center justify-center\">
-                <ListMusic className=\"w-8 h-8 text-[#b3b3b3]\" />
+            <div className="text-center py-8 mt-4">
+              <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-[#232323] flex items-center justify-center">
+                <ListMusic className="w-8 h-8 text-[#b3b3b3]" />
               </div>
-              <p className=\"text-sm text-[#b3b3b3] mb-1\">No queue</p>
-              <p className=\"text-xs text-[#6a6a6a]\">Apply an algorithm to generate</p>
+              <p className="text-sm text-[#b3b3b3] mb-1">No queue</p>
+              <p className="text-xs text-[#6a6a6a]">Apply an algorithm to generate</p>
             </div>
           ) : (
-            <Droppable droppableId=\"queue-list\">
+            <Droppable droppableId="queue-list">
               {(provided, snapshot) => (
                 <div
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                   className={cn(
-                    \"space-y-1 mt-4 max-h-96 overflow-y-auto\",
-                    snapshot.isDraggingOver && \"bg-[#1DB954]/10 rounded-lg p-2\"
+                    "space-y-1 mt-4 max-h-96 overflow-y-auto",
+                    snapshot.isDraggingOver && "bg-[#1DB954]/10 rounded-lg p-2"
                   )}
                 >
                   {queue.map((track, index) => (
@@ -612,24 +612,24 @@ const QueueSection = ({ queue, isExpanded, onToggle }) => {
                           {...provided.draggableProps}
                           onClick={() => playTrack(track, index)}
                           className={cn(
-                            \"flex items-center gap-2 p-2 rounded-md hover:bg-[#282828] cursor-pointer transition-colors\",
-                            snapshot.isDragging && \"opacity-50 shadow-2xl bg-[#282828]\"
+                            "flex items-center gap-2 p-2 rounded-md hover:bg-[#282828] cursor-pointer transition-colors",
+                            snapshot.isDragging && "opacity-50 shadow-2xl bg-[#282828]"
                           )}
                         >
-                          <div {...provided.dragHandleProps} className=\"cursor-grab active:cursor-grabbing\">
-                            <GripVertical className=\"w-3 h-3 text-[#b3b3b3] flex-shrink-0\" />
+                          <div {...provided.dragHandleProps} className="cursor-grab active:cursor-grabbing">
+                            <GripVertical className="w-3 h-3 text-[#b3b3b3] flex-shrink-0" />
                           </div>
-                          <span className=\"text-xs text-[#b3b3b3] w-4\">{index + 1}</span>
+                          <span className="text-xs text-[#b3b3b3] w-4">{index + 1}</span>
                           <img
                             src={track.albumArt}
                             alt={track.album}
-                            className=\"w-8 h-8 rounded-sm flex-shrink-0\"
+                            className="w-8 h-8 rounded-sm flex-shrink-0"
                           />
-                          <div className=\"flex-1 min-w-0\">
-                            <div className=\"text-xs font-medium text-white truncate\">{track.name}</div>
-                            <div className=\"text-xs text-[#b3b3b3] truncate\">{track.artist}</div>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-xs font-medium text-white truncate">{track.name}</div>
+                            <div className="text-xs text-[#b3b3b3] truncate">{track.artist}</div>
                           </div>
-                          <span className=\"text-xs text-[#b3b3b3]\">{formatDuration(track.duration)}</span>
+                          <span className="text-xs text-[#b3b3b3]">{formatDuration(track.duration)}</span>
                         </div>
                       )}
                     </Draggable>
