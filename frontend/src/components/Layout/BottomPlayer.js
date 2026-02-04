@@ -6,7 +6,6 @@ import {
   SkipForward,
   Shuffle,
   Repeat,
-  Heart,
   Volume2,
   Mic2,
   ListMusic,
