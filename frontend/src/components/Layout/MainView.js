@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
-import { Play, Heart, MoreHorizontal, Clock, Search as SearchIcon } from 'lucide-react';
+import { Play, Search as SearchIcon } from 'lucide-react';
 import { ScrollArea } from '../ui/scroll-area';
 import { Input } from '../ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
-import { Button } from '../ui/button';
 import useStore from '../../store/useStore';
 import { mockAlbums, mockArtists, mockPlaylists } from '../../utils/mockData';
-import { formatDuration } from '../../utils/algorithms';
 import { cn } from '../../lib/utils';
 import { toast } from 'sonner';
 
 export const MainView = () => {
-  const [view, setView] = useState('search'); // 'search', 'staging', 'algorithms'
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('albums');
   
@@ -41,44 +38,18 @@ export const MainView = () => {
 
   return (
     <div className="flex-1 bg-spotify-dark rounded-lg overflow-hidden relative flex flex-col">
-      {/* Navigation Bar */}
-      <div className="sticky top-0 z-10 bg-[#121212]/95 backdrop-blur-md px-6 py-4 flex items-center gap-4">
-        <div className="flex gap-2">
-          <NavButton 
-            label="Search" 
-            active={view === 'search'} 
-            onClick={() => setView('search')} 
-          />
-          <NavButton 
-            label="Staging Pool" 
-            active={view === 'staging'} 
-            onClick={() => setView('staging')} 
-          />
-          <NavButton 
-            label="Mix Controls" 
-            active={view === 'algorithms'} 
-            onClick={() => setView('algorithms')} 
-          />
-        </div>
-      </div>
-
-      {/* Content */}
       <ScrollArea className="flex-1">
-        {view === 'search' && (
-          <SearchView
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            activeTab={activeTab}
-            setActiveTab={setActiveTab}
-            filteredAlbums={filteredAlbums}
-            filteredArtists={filteredArtists}
-            filteredPlaylists={filteredPlaylists}
-            onAdd={handleAdd}
-            stagingPool={stagingPool}
-          />
-        )}
-        {view === 'staging' && <StagingView />}
-        {view === 'algorithms' && <AlgorithmsView />}
+        <SearchView
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          filteredAlbums={filteredAlbums}
+          filteredArtists={filteredArtists}
+          filteredPlaylists={filteredPlaylists}
+          onAdd={handleAdd}
+          stagingPool={stagingPool}
+        />
       </ScrollArea>
     </div>
   );
