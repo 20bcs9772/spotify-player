@@ -292,15 +292,6 @@ const AlgorithmsSection = ({ stagingPool, isExpanded, onToggle }) => {
   const setQueue = useStore(state => state.setQueue);
   const playTrack = useStore(state => state.playTrack);
 
-  import {
-    shuffleTracks,
-    interleaveTracks,
-    sortByReleaseDate,
-    sortByPopularity,
-    sortAlphabetically,
-    extractAllTracks
-  } from '../../utils/algorithms';
-
   const allTracks = extractAllTracks(stagingPool);
 
   const executeAlgorithm = (algorithmFn, algorithmName) => {
