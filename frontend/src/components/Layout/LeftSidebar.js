@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
-import { Home, Search, Library, Plus, ChevronLeft, ChevronRight, Music2 } from 'lucide-react';
+import { Home, Search, Library, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { mockPlaylists } from '../../utils/mockData';
+import useStore from '../../store/useStore';
 
 export const LeftSidebar = ({ isCollapsed, onToggleCollapse }) => {
+  const setSelectedPlaylist = useStore(state => state.setSelectedPlaylist);
+  const selectedPlaylist = useStore(state => state.selectedPlaylist);
+
+  const handlePlaylistClick = (playlist) => {
+    setSelectedPlaylist(playlist);
+  };
+
   return (
     <div 
       className={cn(
@@ -13,8 +21,19 @@ export const LeftSidebar = ({ isCollapsed, onToggleCollapse }) => {
     >
       {/* Top Navigation */}
       <div className="p-4 space-y-2">
-        <NavItem icon={<Home size={24} />} label="Home" active collapsed={isCollapsed} />
-        <NavItem icon={<Search size={24} />} label="Search" collapsed={isCollapsed} />
+        <NavItem 
+          icon={<Home size={24} />} 
+          label="Home" 
+          active={!selectedPlaylist} 
+          collapsed={isCollapsed}
+          onClick={() => setSelectedPlaylist(null)}
+        />
+        <NavItem 
+          icon={<Search size={24} />} 
+          label="Search" 
+          collapsed={isCollapsed}
+          onClick={() => setSelectedPlaylist(null)}
+        />
       </div>
 
       {/* Library Section */}
@@ -47,7 +66,12 @@ export const LeftSidebar = ({ isCollapsed, onToggleCollapse }) => {
             <div className="flex-1 overflow-y-auto px-2">
               <div className="space-y-1">
                 {mockPlaylists.map((playlist) => (
-                  <PlaylistItem key={playlist.id} playlist={playlist} />
+                  <PlaylistItem 
+                    key={playlist.id} 
+                    playlist={playlist}
+                    isActive={selectedPlaylist?.id === playlist.id}
+                    onClick={() => handlePlaylistClick(playlist)}
+                  />
                 ))}
                 
                 {/* Mock additional playlists */}
@@ -59,6 +83,14 @@ export const LeftSidebar = ({ isCollapsed, onToggleCollapse }) => {
                     owner: 'You',
                     tracks: []
                   }}
+                  isActive={selectedPlaylist?.id === 'liked'}
+                  onClick={() => handlePlaylistClick({
+                    id: 'liked',
+                    name: 'Liked Songs',
+                    image: 'https://misc.scdn.co/liked-songs/liked-songs-640.png',
+                    owner: 'You',
+                    tracks: []
+                  })}
                 />
                 <PlaylistItem 
                   playlist={{
@@ -68,6 +100,14 @@ export const LeftSidebar = ({ isCollapsed, onToggleCollapse }) => {
                     owner: 'Spotify',
                     tracks: []
                   }}
+                  isActive={selectedPlaylist?.id === 'discover'}
+                  onClick={() => handlePlaylistClick({
+                    id: 'discover',
+                    name: 'Discover Weekly',
+                    image: 'https://dailymix-images.scdn.co/v2/img/ab6761610000e5eb8e6b1a81e0e3a21e6f5f9f2f/1/en/default',
+                    owner: 'Spotify',
+                    tracks: []
+                  })}
                 />
               </div>
             </div>
@@ -80,7 +120,11 @@ export const LeftSidebar = ({ isCollapsed, onToggleCollapse }) => {
               {mockPlaylists.slice(0, 3).map((playlist) => (
                 <button 
                   key={playlist.id}
-                  className="w-full p-2 rounded-md hover:bg-[#232323] transition-colors"
+                  onClick={() => handlePlaylistClick(playlist)}
+                  className={cn(
+                    "w-full p-2 rounded-md transition-colors",
+                    selectedPlaylist?.id === playlist.id ? "bg-[#282828]" : "hover:bg-[#232323]"
+                  )}
                   title={playlist.name}
                 >
                   <img
@@ -108,8 +152,9 @@ export const LeftSidebar = ({ isCollapsed, onToggleCollapse }) => {
   );
 };
 
-const NavItem = ({ icon, label, active = false, collapsed = false }) => (
+const NavItem = ({ icon, label, active = false, collapsed = false, onClick }) => (
   <button
+    onClick={onClick}
     className={cn(
       "flex items-center w-full transition-colors rounded-md",
       collapsed ? "justify-center p-3" : "gap-4 px-3 py-2",
@@ -137,9 +182,15 @@ const FilterPill = ({ label, active = false }) => (
   </button>
 );
 
-const PlaylistItem = ({ playlist }) => {
+const PlaylistItem = ({ playlist, isActive, onClick }) => {
   return (
-    <div className="spotify-sidebar-item group">
+    <div 
+      onClick={onClick}
+      className={cn(
+        "spotify-sidebar-item group",
+        isActive && "bg-[#282828]"
+      )}
+    >
       <img
         src={playlist.image}
         alt={playlist.name}
