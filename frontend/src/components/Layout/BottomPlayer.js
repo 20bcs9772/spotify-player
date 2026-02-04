@@ -78,9 +78,6 @@ export const BottomPlayer = () => {
               {currentTrack.artist}
             </div>
           </div>
-          <button className="text-[#b3b3b3] hover:text-white transition-colors">
-            <Heart size={16} />
-          </button>
         </div>
 
         {/* Center - Playback Controls */}
