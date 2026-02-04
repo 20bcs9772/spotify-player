@@ -8,54 +8,49 @@ export const LoginPage = () => {
   const login = useStore(state => state.login);
 
   const handleLogin = () => {
-    // Mock authentication
     const mockToken = 'mock-access-token-' + Date.now();
     login(mockToken, mockUser);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-surface via-background to-surface relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+    <div className="min-h-screen flex items-center justify-center bg-black relative overflow-hidden">
+      {/* Spotify-style gradient background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#1DB954] via-[#121212] to-black opacity-80" />
       </div>
 
       {/* Login card */}
       <div className="relative z-10 w-full max-w-md mx-4">
-        <div className="glass-effect rounded-2xl p-8 sm:p-12 shadow-2xl animate-fade-in">
+        <div className="bg-[#121212] rounded-2xl p-8 sm:p-12 shadow-2xl border border-[#282828] animate-fade-in">
           {/* Logo */}
           <div className="flex items-center justify-center mb-8">
-            <div className="relative">
-              <div className="absolute inset-0 bg-primary/20 blur-xl rounded-full" />
-              <div className="relative bg-gradient-to-br from-primary to-primary-hover p-4 rounded-full">
-                <Music2 className="w-12 h-12 text-white" />
-              </div>
+            <div className="bg-[#1DB954] p-5 rounded-full">
+              <Music2 className="w-12 h-12 text-black" />
             </div>
           </div>
 
           {/* Title */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl sm:text-5xl font-bold mb-3 bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+            <h1 className="text-4xl sm:text-5xl font-black mb-3 tracking-tight">
               Spotify Combiner
             </h1>
-            <p className="text-muted-foreground text-base sm:text-lg">
+            <p className="text-[#b3b3b3] text-base sm:text-lg">
               Mix, match, and master your perfect playlist
             </p>
           </div>
 
           {/* Features */}
-          <div className="space-y-4 mb-8">
+          <div className="space-y-3 mb-8">
             <Feature 
-              icon={<Sparkles className="w-5 h-5" />}
-              text="Combine multiple albums, artists, and playlists"
+              icon={<Sparkles className="w-4 h-4" />}
+              text="Combine albums, artists, and playlists"
             />
             <Feature 
-              icon={<Sparkles className="w-5 h-5" />}
-              text="Apply smart algorithms to create unique mixes"
+              icon={<Sparkles className="w-4 h-4" />}
+              text="Apply smart mixing algorithms"
             />
             <Feature 
-              icon={<Sparkles className="w-5 h-5" />}
+              icon={<Sparkles className="w-4 h-4" />}
               text="Control playback on all your devices"
             />
           </div>
@@ -63,13 +58,12 @@ export const LoginPage = () => {
           {/* Login button */}
           <Button 
             onClick={handleLogin}
-            className="w-full h-14 text-lg font-semibold bg-primary hover:bg-primary-hover text-white rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-primary/50"
+            className="w-full h-14 text-base font-bold bg-[#1DB954] hover:bg-[#1ed760] text-black rounded-full transition-all duration-200 hover:scale-105"
           >
-            <Music2 className="w-5 h-5 mr-2" />
             Continue with Spotify
           </Button>
 
-          <p className="text-center text-sm text-subdued mt-6">
+          <p className="text-center text-sm text-[#727272] mt-6">
             Demo mode - No actual Spotify login required
           </p>
         </div>
@@ -79,8 +73,8 @@ export const LoginPage = () => {
 };
 
 const Feature = ({ icon, text }) => (
-  <div className="flex items-start gap-3 text-muted-foreground">
-    <div className="text-primary mt-0.5">{icon}</div>
+  <div className="flex items-center gap-3 text-[#b3b3b3]">
+    <div className="text-[#1DB954]">{icon}</div>
     <span className="text-sm">{text}</span>
   </div>
 );
