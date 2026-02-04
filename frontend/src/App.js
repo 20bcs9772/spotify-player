@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Toaster } from './components/ui/sonner';
 import useStore from './store/useStore';
 import { LoginPage } from './components/Auth/LoginPage';
 import { LeftSidebar } from './components/Layout/LeftSidebar';
-import { RightSidebar } from './components/Layout/RightSidebar';
+import { RightPanel } from './components/Layout/RightPanel';
 import { MainView } from './components/Layout/MainView';
 import { BottomPlayer } from './components/Layout/BottomPlayer';
 import './App.css';
 
 function App() {
   const isAuthenticated = useStore(state => state.isAuthenticated);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   if (!isAuthenticated) {
     return (
@@ -24,14 +25,17 @@ function App() {
     <div className="h-screen w-screen bg-black overflow-hidden">
       {/* Main Layout - Spotify 3-pane grid */}
       <div className="h-[calc(100vh-90px)] p-2 flex gap-2">
-        {/* Left Sidebar */}
-        <LeftSidebar />
+        {/* Left Sidebar - Playlists */}
+        <LeftSidebar 
+          isCollapsed={isSidebarCollapsed}
+          onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+        />
 
-        {/* Main Content Area */}
+        {/* Main Content Area - Search & Browse */}
         <MainView />
 
-        {/* Right Sidebar - Queue (hidden on mobile) */}
-        <RightSidebar />
+        {/* Right Panel - Combiner Features */}
+        <RightPanel />
       </div>
 
       {/* Bottom Player Bar */}
