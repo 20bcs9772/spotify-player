@@ -112,7 +112,8 @@ const PlaylistView = ({ playlist, onAddToPool }) => {
 
       {/* Tracklist */}
       <div className="px-6 pb-6">
-        <div className="sticky top-0 bg-[#121212]/95 backdrop-blur-md grid grid-cols-[16px_4fr_2fr_1fr] gap-4 px-4 py-2 border-b border-[#282828] text-[#b3b3b3] text-xs uppercase">\n          <div>#</div>
+        <div className="sticky top-0 bg-[#121212]/95 backdrop-blur-md grid grid-cols-[16px_4fr_2fr_1fr] gap-4 px-4 py-2 border-b border-[#282828] text-[#b3b3b3] text-xs uppercase">
+          <div>#</div>
           <div>Title</div>
           <div>Album</div>
           <div className="flex justify-end"><Clock size={16} /></div>
