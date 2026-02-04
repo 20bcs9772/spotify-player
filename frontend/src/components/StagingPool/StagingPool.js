@@ -13,7 +13,6 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { restrictToVerticalAxis, restrictToParentElement } from '@dnd-kit/modifiers';
 import { ScrollArea } from '../ui/scroll-area';
 import { Button } from '../ui/button';
 import { Trash2, Play } from 'lucide-react';
