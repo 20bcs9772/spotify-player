@@ -21,8 +21,13 @@ const useStore = create((set, get) => ({
     user: null,
     stagingPool: [],
     queue: [],
-    currentTrack: null
+    currentTrack: null,
+    selectedPlaylist: null
   }),
+
+  // Selected Playlist for viewing
+  selectedPlaylist: null,
+  setSelectedPlaylist: (playlist) => set({ selectedPlaylist: playlist }),
 
   // Staging Pool (Albums, Artists, Playlists added by user)
   stagingPool: [],
@@ -55,6 +60,8 @@ const useStore = create((set, get) => ({
   removeFromQueue: (trackId) => set((state) => ({
     queue: state.queue.filter(track => track.id !== trackId)
   })),
+
+  reorderQueue: (newOrder) => set({ queue: newOrder }),
 
   // Playback State
   isPlaying: false,
