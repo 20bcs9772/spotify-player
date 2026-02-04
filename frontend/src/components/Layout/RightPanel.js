@@ -37,7 +37,7 @@ import {
   CollapsibleTrigger,
 } from '../ui/collapsible';
 import useStore from '../../store/useStore';
-import { formatDuration, extractAllTracks } from '../../utils/algorithms';
+import { formatDuration, extractAllTracks, shuffleTracks, interleaveTracks, sortByReleaseDate, sortByPopularity, sortAlphabetically, applyFilters, getUniqueGenres } from '../../utils/algorithms';
 import { cn } from '../../lib/utils';
 import { toast } from 'sonner';
 
