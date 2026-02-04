@@ -397,7 +397,7 @@ const FiltersSection = ({ allTracks, isExpanded, onToggle }) => {
   const playTrack = useStore(state => state.playTrack);
   const setFilterOptions = useStore(state => state.setFilterOptions);
 
-  const { applyFilters, getUniqueGenres } = require('../../utils/algorithms');
+  import { applyFilters, getUniqueGenres } from '../../utils/algorithms';
   const availableGenres = getUniqueGenres(allTracks);
 
   const handleApplyFilters = () => {
