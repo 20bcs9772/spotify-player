@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
-
+from routers import playlists, search
 
 app = FastAPI(
     title="Vercel + FastAPI",
@@ -342,3 +342,8 @@ def read_root():
     </body>
     </html>
     """
+
+
+
+app.include_router(playlists.router)
+app.include_router(search.router)
