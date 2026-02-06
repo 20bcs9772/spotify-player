@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Home, Search, Library, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { mockPlaylists } from '../../utils/mockData';

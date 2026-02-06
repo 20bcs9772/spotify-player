@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Play, Search as SearchIcon, Clock, Plus } from 'lucide-react';
+import { Search as SearchIcon, Clock, Plus } from 'lucide-react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { ScrollArea } from '../ui/scroll-area';
 import { Input } from '../ui/input';
