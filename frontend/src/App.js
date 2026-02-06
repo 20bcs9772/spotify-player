@@ -4,7 +4,7 @@ import useStore from './store/useStore';
 import { LoginPage } from './components/Auth/LoginPage';
 import { LeftSidebar } from './components/Layout/LeftSidebar';
 import { RightPanel } from './components/Layout/RightPanel';
-import { MainView } from './components/Layout/MainView.simple';
+import { MainView } from './components/Layout/MainView';
 import { BottomPlayer } from './components/Layout/BottomPlayer';
 import './App.css';
 
