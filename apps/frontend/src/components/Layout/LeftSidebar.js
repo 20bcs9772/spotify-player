@@ -1,36 +1,43 @@
-import React from 'react';
-import { Home, Search, Library, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
-import { cn } from '../../lib/utils';
-import { mockPlaylists } from '../../utils/mockData';
-import useStore from '../../store/useStore';
+import React from "react";
+import {
+  Home,
+  Search,
+  Library,
+  Plus,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import { cn } from "../../lib/utils";
+import { mockPlaylists } from "../../utils/mockData";
+import useStore from "../../store/useStore";
 
 export const LeftSidebar = ({ isCollapsed, onToggleCollapse }) => {
-  const setSelectedPlaylist = useStore(state => state.setSelectedPlaylist);
-  const selectedPlaylist = useStore(state => state.selectedPlaylist);
+  const setSelectedPlaylist = useStore((state) => state.setSelectedPlaylist);
+  const selectedPlaylist = useStore((state) => state.selectedPlaylist);
 
   const handlePlaylistClick = (playlist) => {
     setSelectedPlaylist(playlist);
   };
 
   return (
-    <div 
+    <div
       className={cn(
         "bg-spotify-dark rounded-lg flex flex-col h-full overflow-hidden transition-all duration-300",
-        isCollapsed ? "w-[72px]" : "w-[280px] lg:w-[350px]"
+        isCollapsed ? "w-[72px]" : "w-[280px] lg:w-[350px]",
       )}
     >
       {/* Top Navigation */}
       <div className="p-4 space-y-2">
-        <NavItem 
-          icon={<Home size={24} />} 
-          label="Home" 
-          active={!selectedPlaylist} 
+        <NavItem
+          icon={<Home size={24} />}
+          label="Home"
+          active={!selectedPlaylist}
           collapsed={isCollapsed}
           onClick={() => setSelectedPlaylist(null)}
         />
-        <NavItem 
-          icon={<Search size={24} />} 
-          label="Search" 
+        <NavItem
+          icon={<Search size={24} />}
+          label="Search"
           collapsed={isCollapsed}
           onClick={() => setSelectedPlaylist(null)}
         />
@@ -39,12 +46,14 @@ export const LeftSidebar = ({ isCollapsed, onToggleCollapse }) => {
       {/* Library Section */}
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="px-4 py-2 flex items-center justify-between">
-          <button 
+          <button
             className="flex items-center gap-3 text-[#b3b3b3] hover:text-white transition-colors"
             onClick={onToggleCollapse}
           >
             <Library size={24} />
-            {!isCollapsed && <span className="font-bold text-base">Your Library</span>}
+            {!isCollapsed && (
+              <span className="font-bold text-base">Your Library</span>
+            )}
           </button>
           {!isCollapsed && (
             <button className="text-[#b3b3b3] hover:text-white transition-colors">
@@ -66,48 +75,56 @@ export const LeftSidebar = ({ isCollapsed, onToggleCollapse }) => {
             <div className="flex-1 overflow-y-auto px-2">
               <div className="space-y-1">
                 {mockPlaylists.map((playlist) => (
-                  <PlaylistItem 
-                    key={playlist.id} 
+                  <PlaylistItem
+                    key={playlist.id}
                     playlist={playlist}
                     isActive={selectedPlaylist?.id === playlist.id}
                     onClick={() => handlePlaylistClick(playlist)}
                   />
                 ))}
-                
+
                 {/* Mock additional playlists */}
-                <PlaylistItem 
+                <PlaylistItem
                   playlist={{
-                    id: 'liked',
-                    name: 'Liked Songs',
-                    image: 'https://misc.scdn.co/liked-songs/liked-songs-640.png',
-                    owner: 'You',
-                    tracks: []
+                    id: "liked",
+                    name: "Liked Songs",
+                    image:
+                      "https://misc.scdn.co/liked-songs/liked-songs-640.png",
+                    owner: "You",
+                    tracks: [],
                   }}
-                  isActive={selectedPlaylist?.id === 'liked'}
-                  onClick={() => handlePlaylistClick({
-                    id: 'liked',
-                    name: 'Liked Songs',
-                    image: 'https://misc.scdn.co/liked-songs/liked-songs-640.png',
-                    owner: 'You',
-                    tracks: []
-                  })}
+                  isActive={selectedPlaylist?.id === "liked"}
+                  onClick={() =>
+                    handlePlaylistClick({
+                      id: "liked",
+                      name: "Liked Songs",
+                      image:
+                        "https://misc.scdn.co/liked-songs/liked-songs-640.png",
+                      owner: "You",
+                      tracks: [],
+                    })
+                  }
                 />
-                <PlaylistItem 
+                <PlaylistItem
                   playlist={{
-                    id: 'discover',
-                    name: 'Discover Weekly',
-                    image: 'https://dailymix-images.scdn.co/v2/img/ab6761610000e5eb8e6b1a81e0e3a21e6f5f9f2f/1/en/default',
-                    owner: 'Spotify',
-                    tracks: []
+                    id: "discover",
+                    name: "Discover Weekly",
+                    image:
+                      "https://dailymix-images.scdn.co/v2/img/ab6761610000e5eb8e6b1a81e0e3a21e6f5f9f2f/1/en/default",
+                    owner: "Spotify",
+                    tracks: [],
                   }}
-                  isActive={selectedPlaylist?.id === 'discover'}
-                  onClick={() => handlePlaylistClick({
-                    id: 'discover',
-                    name: 'Discover Weekly',
-                    image: 'https://dailymix-images.scdn.co/v2/img/ab6761610000e5eb8e6b1a81e0e3a21e6f5f9f2f/1/en/default',
-                    owner: 'Spotify',
-                    tracks: []
-                  })}
+                  isActive={selectedPlaylist?.id === "discover"}
+                  onClick={() =>
+                    handlePlaylistClick({
+                      id: "discover",
+                      name: "Discover Weekly",
+                      image:
+                        "https://dailymix-images.scdn.co/v2/img/ab6761610000e5eb8e6b1a81e0e3a21e6f5f9f2f/1/en/default",
+                      owner: "Spotify",
+                      tracks: [],
+                    })
+                  }
                 />
               </div>
             </div>
@@ -118,12 +135,14 @@ export const LeftSidebar = ({ isCollapsed, onToggleCollapse }) => {
           <div className="flex-1 overflow-y-auto px-2 py-2">
             <div className="space-y-2">
               {mockPlaylists.slice(0, 3).map((playlist) => (
-                <button 
+                <button
                   key={playlist.id}
                   onClick={() => handlePlaylistClick(playlist)}
                   className={cn(
                     "w-full p-2 rounded-md transition-colors",
-                    selectedPlaylist?.id === playlist.id ? "bg-[#282828]" : "hover:bg-[#232323]"
+                    selectedPlaylist?.id === playlist.id
+                      ? "bg-[#282828]"
+                      : "hover:bg-[#232323]",
                   )}
                   title={playlist.name}
                 >
@@ -152,15 +171,19 @@ export const LeftSidebar = ({ isCollapsed, onToggleCollapse }) => {
   );
 };
 
-const NavItem = ({ icon, label, active = false, collapsed = false, onClick }) => (
+const NavItem = ({
+  icon,
+  label,
+  active = false,
+  collapsed = false,
+  onClick,
+}) => (
   <button
     onClick={onClick}
     className={cn(
       "flex items-center w-full transition-colors rounded-md",
       collapsed ? "justify-center p-3" : "gap-4 px-3 py-2",
-      active 
-        ? "text-white" 
-        : "text-[#b3b3b3] hover:text-white"
+      active ? "text-white" : "text-[#b3b3b3] hover:text-white",
     )}
     title={collapsed ? label : undefined}
   >
@@ -175,7 +198,7 @@ const FilterPill = ({ label, active = false }) => (
       "px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors",
       active
         ? "bg-white text-black"
-        : "bg-[#232323] text-white hover:bg-[#2a2a2a]"
+        : "bg-[#232323] text-white hover:bg-[#2a2a2a]",
     )}
   >
     {label}
@@ -184,12 +207,9 @@ const FilterPill = ({ label, active = false }) => (
 
 const PlaylistItem = ({ playlist, isActive, onClick }) => {
   return (
-    <div 
+    <div
       onClick={onClick}
-      className={cn(
-        "spotify-sidebar-item group",
-        isActive && "bg-[#282828]"
-      )}
+      className={cn("spotify-sidebar-item group", isActive && "bg-[#282828]")}
     >
       <img
         src={playlist.image}

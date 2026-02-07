@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Play,
   Pause,
@@ -9,21 +9,21 @@ import {
   Volume2,
   Mic2,
   ListMusic,
-  Monitor
-} from 'lucide-react';
-import { Slider } from '../ui/slider';
-import useStore from '../../store/useStore';
-import { formatDuration } from '../../utils/algorithms';
-import { cn } from '../../lib/utils';
+  Monitor,
+} from "lucide-react";
+import { Slider } from "../ui/slider";
+import useStore from "../../store/useStore";
+import { formatDuration } from "../../utils/algorithms";
+import { cn } from "../../lib/utils";
 
 export const BottomPlayer = () => {
-  const isPlaying = useStore(state => state.isPlaying);
-  const currentTrack = useStore(state => state.currentTrack);
-  const currentTrackIndex = useStore(state => state.currentTrackIndex);
-  const queue = useStore(state => state.queue);
-  const togglePlayPause = useStore(state => state.togglePlayPause);
-  const nextTrack = useStore(state => state.nextTrack);
-  const previousTrack = useStore(state => state.previousTrack);
+  const isPlaying = useStore((state) => state.isPlaying);
+  const currentTrack = useStore((state) => state.currentTrack);
+  const currentTrackIndex = useStore((state) => state.currentTrackIndex);
+  const queue = useStore((state) => state.queue);
+  const togglePlayPause = useStore((state) => state.togglePlayPause);
+  const nextTrack = useStore((state) => state.nextTrack);
+  const previousTrack = useStore((state) => state.previousTrack);
 
   const [progress, setProgress] = React.useState(0);
   const [volume, setVolume] = React.useState([70]);
@@ -35,7 +35,7 @@ export const BottomPlayer = () => {
     if (!isPlaying || !currentTrack) return;
 
     const interval = setInterval(() => {
-      setProgress(prev => {
+      setProgress((prev) => {
         if (prev >= 100) {
           nextTrack();
           return 0;
@@ -57,7 +57,9 @@ export const BottomPlayer = () => {
     );
   }
 
-  const currentTime = currentTrack.duration ? (progress / 100) * currentTrack.duration : 0;
+  const currentTime = currentTrack.duration
+    ? (progress / 100) * currentTrack.duration
+    : 0;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 h-[90px] bg-black border-t border-[#282828] z-50">
@@ -87,7 +89,9 @@ export const BottomPlayer = () => {
               onClick={() => setIsShuffle(!isShuffle)}
               className={cn(
                 "transition-colors",
-                isShuffle ? "text-[#1DB954]" : "text-[#b3b3b3] hover:text-white"
+                isShuffle
+                  ? "text-[#1DB954]"
+                  : "text-[#b3b3b3] hover:text-white",
               )}
             >
               <Shuffle size={16} />
@@ -108,7 +112,11 @@ export const BottomPlayer = () => {
               {isPlaying ? (
                 <Pause size={20} className="text-black" fill="currentColor" />
               ) : (
-                <Play size={20} className="text-black ml-0.5" fill="currentColor" />
+                <Play
+                  size={20}
+                  className="text-black ml-0.5"
+                  fill="currentColor"
+                />
               )}
             </button>
 
@@ -124,7 +132,9 @@ export const BottomPlayer = () => {
               onClick={() => setRepeatMode((repeatMode + 1) % 3)}
               className={cn(
                 "transition-colors",
-                repeatMode > 0 ? "text-[#1DB954]" : "text-[#b3b3b3] hover:text-white"
+                repeatMode > 0
+                  ? "text-[#1DB954]"
+                  : "text-[#b3b3b3] hover:text-white",
               )}
             >
               <Repeat size={16} />

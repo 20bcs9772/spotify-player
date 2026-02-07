@@ -1,14 +1,14 @@
-import React from 'react';
-import { Music2, Sparkles } from 'lucide-react';
-import { Button } from '../ui/button';
-import useStore from '../../store/useStore';
-import { mockUser } from '../../utils/mockData';
+import React from "react";
+import { Music2, Sparkles } from "lucide-react";
+import { Button } from "../ui/button";
+import useStore from "../../store/useStore";
+import { mockUser } from "../../utils/mockData";
 
 export const LoginPage = () => {
-  const login = useStore(state => state.login);
+  const login = useStore((state) => state.login);
 
   const handleLogin = () => {
-    const mockToken = 'mock-access-token-' + Date.now();
+    const mockToken = "mock-access-token-" + Date.now();
     login(mockToken, mockUser);
   };
 
@@ -41,22 +41,22 @@ export const LoginPage = () => {
 
           {/* Features */}
           <div className="space-y-3 mb-8">
-            <Feature 
+            <Feature
               icon={<Sparkles className="w-4 h-4" />}
               text="Combine albums, artists, and playlists"
             />
-            <Feature 
+            <Feature
               icon={<Sparkles className="w-4 h-4" />}
               text="Apply smart mixing algorithms"
             />
-            <Feature 
+            <Feature
               icon={<Sparkles className="w-4 h-4" />}
               text="Control playback on all your devices"
             />
           </div>
 
           {/* Login button */}
-          <Button 
+          <Button
             onClick={handleLogin}
             className="w-full h-14 text-base font-bold bg-[#1DB954] hover:bg-[#1ed760] text-black rounded-full transition-all duration-200 hover:scale-105"
           >
