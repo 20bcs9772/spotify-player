@@ -26,7 +26,7 @@ const useStore = create((set, get) => ({
   }),
 
   // Selected Playlist for viewing
-  selectedPlaylist: null,
+  selectedPlaylist: "home",
   setSelectedPlaylist: (playlist) => set({ selectedPlaylist: playlist }),
 
   // Staging Pool (Albums, Artists, Playlists added by user)

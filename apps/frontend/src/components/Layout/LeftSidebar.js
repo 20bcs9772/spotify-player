@@ -10,6 +10,7 @@ import {
 import { cn } from "../../lib/utils";
 import { mockPlaylists } from "../../utils/mockData";
 import useStore from "../../store/useStore";
+import { Separator } from "../ui/separator";
 
 export const LeftSidebar = ({ isCollapsed, onToggleCollapse }) => {
   const setSelectedPlaylist = useStore((state) => state.setSelectedPlaylist);
@@ -27,25 +28,28 @@ export const LeftSidebar = ({ isCollapsed, onToggleCollapse }) => {
       )}
     >
       {/* Top Navigation */}
-      <div className="p-4 space-y-2">
+      <div className="py-4 px-5 space-y-2">
         <NavItem
           icon={<Home size={24} />}
           label="Home"
           active={!selectedPlaylist}
           collapsed={isCollapsed}
-          onClick={() => setSelectedPlaylist(null)}
+          onClick={() => setSelectedPlaylist("home")}
         />
         <NavItem
           icon={<Search size={24} />}
           label="Search"
           collapsed={isCollapsed}
-          onClick={() => setSelectedPlaylist(null)}
+          onClick={() => setSelectedPlaylist("search")}
         />
+        <Separator className="bg-[#5a5a5a] mt-4" />
       </div>
 
       {/* Library Section */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="px-4 py-2 flex items-center justify-between">
+        <div
+          className={`px-4 py-2 flex items-center ${isCollapsed ? "justify-center" : "justify-between"}`}
+        >
           <button
             className="flex items-center gap-3 text-[#b3b3b3] hover:text-white transition-colors"
             onClick={onToggleCollapse}
@@ -182,7 +186,7 @@ const NavItem = ({
     onClick={onClick}
     className={cn(
       "flex items-center w-full transition-colors rounded-md",
-      collapsed ? "justify-center p-3" : "gap-4 px-3 py-2",
+      collapsed ? "justify-center p-2" : "gap-4 py-2",
       active ? "text-white" : "text-[#b3b3b3] hover:text-white",
     )}
     title={collapsed ? label : undefined}
