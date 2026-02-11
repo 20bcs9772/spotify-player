@@ -9,4 +9,20 @@ def create_playlist(data):
         "description": data.description or "",
         "public": data.public if data.public is not None else True
     }
-    return spotify_post("/me/playlists", body)
+    response = spotify_post("/me/playlists", body)
+    if data.uris:
+        data["playlistId"] = response["id"]
+        add_tracks_to_playlist(data)
+        return get_playlist_by_id(response["id"])
+    else:
+        return response
+
+def add_tracks_to_playlist(data):
+    body={
+        "uris": data.uris,
+        "position": data.position or 0
+    }
+    return spotify_post(f"/playlists/{data.playlistId}/tracks", body)
+
+def get_playlist_by_id(playlistId:str):
+    return spotify_post(f"/playlists/{playlistId}")
