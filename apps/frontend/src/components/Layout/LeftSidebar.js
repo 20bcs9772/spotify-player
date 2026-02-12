@@ -23,6 +23,7 @@ export const LeftSidebar = ({ isCollapsed, onToggleCollapse }) => {
 
   useEffect(() => {
     getUserPlaylists();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
