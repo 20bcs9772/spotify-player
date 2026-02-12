@@ -1,4 +1,8 @@
-import { create } from 'zustand';
+import {
+  getUserPlaylists,
+  createPlaylist as createPlaylistService,
+} from "@/services/playlists";
+import { create } from "zustand";
 
 /**
  * Zustand store for managing application state
@@ -9,21 +13,23 @@ const useStore = create((set, get) => ({
   accessToken: null,
   user: null,
 
-  login: (token, userData) => set({ 
-    isAuthenticated: true, 
-    accessToken: token,
-    user: userData 
-  }),
-  
-  logout: () => set({ 
-    isAuthenticated: false, 
-    accessToken: null,
-    user: null,
-    stagingPool: [],
-    queue: [],
-    currentTrack: null,
-    selectedPlaylist: null
-  }),
+  login: (token, userData) =>
+    set({
+      isAuthenticated: true,
+      accessToken: token,
+      user: userData,
+    }),
+
+  logout: () =>
+    set({
+      isAuthenticated: false,
+      accessToken: null,
+      user: null,
+      stagingPool: [],
+      queue: [],
+      currentTrack: null,
+      selectedPlaylist: null,
+    }),
 
   // Selected Playlist for viewing
   selectedPlaylist: "home",
@@ -32,19 +38,23 @@ const useStore = create((set, get) => ({
   // Staging Pool (Albums, Artists, Playlists added by user)
   stagingPool: [],
 
-  addToStagingPool: (item) => set((state) => {
-    // Check if item already exists
-    const exists = state.stagingPool.some(poolItem => poolItem.id === item.id);
-    if (exists) return state;
-    
-    return { 
-      stagingPool: [...state.stagingPool, item] 
-    };
-  }),
+  addToStagingPool: (item) =>
+    set((state) => {
+      // Check if item already exists
+      const exists = state.stagingPool.some(
+        (poolItem) => poolItem.id === item.id,
+      );
+      if (exists) return state;
 
-  removeFromStagingPool: (itemId) => set((state) => ({
-    stagingPool: state.stagingPool.filter(item => item.id !== itemId)
-  })),
+      return {
+        stagingPool: [...state.stagingPool, item],
+      };
+    }),
+
+  removeFromStagingPool: (itemId) =>
+    set((state) => ({
+      stagingPool: state.stagingPool.filter((item) => item.id !== itemId),
+    })),
 
   reorderStagingPool: (newOrder) => set({ stagingPool: newOrder }),
 
@@ -57,9 +67,10 @@ const useStore = create((set, get) => ({
 
   clearQueue: () => set({ queue: [] }),
 
-  removeFromQueue: (trackId) => set((state) => ({
-    queue: state.queue.filter(track => track.id !== trackId)
-  })),
+  removeFromQueue: (trackId) =>
+    set((state) => ({
+      queue: state.queue.filter((track) => track.id !== trackId),
+    })),
 
   reorderQueue: (newOrder) => set({ queue: newOrder }),
 
@@ -70,27 +81,29 @@ const useStore = create((set, get) => ({
   playerDeviceId: null,
 
   setIsPlaying: (playing) => set({ isPlaying: playing }),
-  
-  setCurrentTrack: (track, index) => set({ 
-    currentTrack: track,
-    currentTrackIndex: index 
-  }),
 
-  playTrack: (track, index) => set({ 
-    currentTrack: track,
-    currentTrackIndex: index,
-    isPlaying: true 
-  }),
+  setCurrentTrack: (track, index) =>
+    set({
+      currentTrack: track,
+      currentTrackIndex: index,
+    }),
+
+  playTrack: (track, index) =>
+    set({
+      currentTrack: track,
+      currentTrackIndex: index,
+      isPlaying: true,
+    }),
 
   nextTrack: () => {
     const { queue, currentTrackIndex } = get();
     if (currentTrackIndex < queue.length - 1) {
       const nextIndex = currentTrackIndex + 1;
       const nextTrack = queue[nextIndex];
-      set({ 
+      set({
         currentTrack: nextTrack,
         currentTrackIndex: nextIndex,
-        isPlaying: true
+        isPlaying: true,
       });
     }
   },
@@ -100,17 +113,18 @@ const useStore = create((set, get) => ({
     if (currentTrackIndex > 0) {
       const prevIndex = currentTrackIndex - 1;
       const prevTrack = queue[prevIndex];
-      set({ 
+      set({
         currentTrack: prevTrack,
         currentTrackIndex: prevIndex,
-        isPlaying: true
+        isPlaying: true,
       });
     }
   },
 
-  togglePlayPause: () => set((state) => ({ 
-    isPlaying: !state.isPlaying 
-  })),
+  togglePlayPause: () =>
+    set((state) => ({
+      isPlaying: !state.isPlaying,
+    })),
 
   setPlayerDeviceId: (deviceId) => set({ playerDeviceId: deviceId }),
 
@@ -120,10 +134,25 @@ const useStore = create((set, get) => ({
     minYear: 1950,
     maxYear: new Date().getFullYear(),
     excludeExplicit: false,
-    minPopularity: 0
+    minPopularity: 0,
   },
 
   setFilterOptions: (options) => set({ filterOptions: options }),
+
+  myPlaylists: [],
+  getMyPlaylists: async () => {
+    const response = await getUserPlaylists();
+    set({ myPlaylists: response.items });
+  },
+  createPlaylist: async (data) => {
+    const {queue} = get();
+    const uris = queue.map(q => q.uri)
+    const response = await createPlaylistService({...data, uris});
+    // Refresh playlists after creation
+    const playlistsResponse = await getUserPlaylists();
+    set({ myPlaylists: playlistsResponse.items });
+    return response;
+  },
 }));
 
 export default useStore;

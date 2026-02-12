@@ -65,20 +65,23 @@ export const QueueSection = ({ queue, isExpanded, onToggle }) => {
                       {index + 1}
                     </span>
                     <img
-                      src={track.albumArt}
-                      alt={track.album}
+                      src={track.album?.images?.[0]?.url || ""}
+                      alt={track.album?.name || ""}
                       className="w-8 h-8 rounded-sm flex-shrink-0"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                      }}
                     />
                     <div className="flex-1 min-w-0">
                       <div className="text-xs font-medium text-white truncate">
                         {track.name}
                       </div>
                       <div className="text-xs text-[#b3b3b3] truncate">
-                        {track.artist}
+                        {track.artists?.map(a => a.name).join(", ") || "Unknown Artist"}
                       </div>
                     </div>
                     <span className="text-xs text-[#b3b3b3]">
-                      {formatDuration(track.duration)}
+                      {formatDuration(track.duration_ms || 0)}
                     </span>
                   </div>
                 </Draggable>

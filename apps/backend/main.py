@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from routers import playlists, search, auth
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="Vercel + FastAPI",
@@ -8,6 +9,13 @@ app = FastAPI(
     version="1.0.0",
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/api/data")
 def get_sample_data():

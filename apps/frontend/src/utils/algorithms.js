@@ -4,25 +4,50 @@
 
 /**
  * Extract all tracks from staging pool items
+ * Handles both mock data and Spotify API structure
  */
 export const extractAllTracks = (stagingPool) => {
   const tracks = [];
   
   stagingPool.forEach(item => {
-    if (item.type === 'album' || item.type === 'playlist') {
-      tracks.push(...item.tracks.map(track => ({
-        ...track,
-        sourceId: item.id,
-        sourceType: item.type,
-        sourceName: item.name
-      })));
+    if (item.type === 'album') {
+      // Spotify albums: tracks.items[] (direct tracks)
+      // Mock data: tracks[] (direct tracks)
+      const albumTracks = item.tracks?.items || item.tracks || [];
+      albumTracks.forEach(track => {
+        const trackObj = track.track || track; // Handle nested structure
+        tracks.push({
+          ...trackObj,
+          sourceId: item.id,
+          sourceType: item.type,
+          sourceName: item.name
+        });
+      });
+    } else if (item.type === 'playlist') {
+      // Spotify playlists: tracks.items[].track (nested)
+      // Mock data: tracks[] (direct tracks)
+      const playlistTracks = item.tracks?.items || item.tracks || [];
+      playlistTracks.forEach(playlistItem => {
+        const trackObj = playlistItem.track || playlistItem; // Handle nested structure
+        tracks.push({
+          ...trackObj,
+          sourceId: item.id,
+          sourceType: item.type,
+          sourceName: item.name
+        });
+      });
     } else if (item.type === 'artist') {
-      tracks.push(...item.topTracks.map(track => ({
-        ...track,
-        sourceId: item.id,
-        sourceType: item.type,
-        sourceName: item.name
-      })));
+      // Spotify artists: might have topTracks or need separate fetch
+      // Mock data: topTracks[]
+      const artistTracks = item.topTracks || [];
+      artistTracks.forEach(track => {
+        tracks.push({
+          ...track,
+          sourceId: item.id,
+          sourceType: item.type,
+          sourceName: item.name
+        });
+      });
     }
   });
   
@@ -47,24 +72,45 @@ export const shuffleTracks = (tracks) => {
 export const interleaveTracks = (stagingPool) => {
   if (stagingPool.length === 0) return [];
   
-  // Get tracks grouped by source
+  // Get tracks grouped by source using extractAllTracks logic
   const tracksBySource = stagingPool.map(item => {
-    if (item.type === 'album' || item.type === 'playlist') {
-      return item.tracks.map(track => ({
-        ...track,
-        sourceId: item.id,
-        sourceType: item.type,
-        sourceName: item.name
-      }));
+    const sourceTracks = [];
+    
+    if (item.type === 'album') {
+      const albumTracks = item.tracks?.items || item.tracks || [];
+      albumTracks.forEach(track => {
+        const trackObj = track.track || track;
+        sourceTracks.push({
+          ...trackObj,
+          sourceId: item.id,
+          sourceType: item.type,
+          sourceName: item.name
+        });
+      });
+    } else if (item.type === 'playlist') {
+      const playlistTracks = item.tracks?.items || item.tracks || [];
+      playlistTracks.forEach(playlistItem => {
+        const trackObj = playlistItem.track || playlistItem;
+        sourceTracks.push({
+          ...trackObj,
+          sourceId: item.id,
+          sourceType: item.type,
+          sourceName: item.name
+        });
+      });
     } else if (item.type === 'artist') {
-      return item.topTracks.map(track => ({
-        ...track,
-        sourceId: item.id,
-        sourceType: item.type,
-        sourceName: item.name
-      }));
+      const artistTracks = item.topTracks || [];
+      artistTracks.forEach(track => {
+        sourceTracks.push({
+          ...track,
+          sourceId: item.id,
+          sourceType: item.type,
+          sourceName: item.name
+        });
+      });
     }
-    return [];
+    
+    return sourceTracks;
   });
   
   // Interleave tracks
@@ -84,12 +130,23 @@ export const interleaveTracks = (stagingPool) => {
 
 /**
  * Sort by release date (year)
+ * Handles both mock data (year) and Spotify API (album.release_date)
  */
 export const sortByReleaseDate = (tracks, ascending = false) => {
   const sorted = [...tracks];
   sorted.sort((a, b) => {
-    const yearA = a.year || 0;
-    const yearB = b.year || 0;
+    // Extract year from release_date (format: "YYYY-MM-DD" or "YYYY")
+    const getYear = (track) => {
+      if (track.year) return track.year;
+      if (track.album?.release_date) {
+        const year = parseInt(track.album.release_date.split('-')[0]);
+        return isNaN(year) ? 0 : year;
+      }
+      return 0;
+    };
+    
+    const yearA = getYear(a);
+    const yearB = getYear(b);
     return ascending ? yearA - yearB : yearB - yearA;
   });
   return sorted;
@@ -136,10 +193,15 @@ export const filterByGenre = (tracks, genres) => {
 
 /**
  * Filter by year range
+ * Handles both mock data (year) and Spotify API (album.release_date)
  */
 export const filterByYear = (tracks, minYear, maxYear) => {
   return tracks.filter(track => {
-    const year = track.year || 0;
+    let year = track.year || 0;
+    if (!year && track.album?.release_date) {
+      year = parseInt(track.album.release_date.split('-')[0]);
+      year = isNaN(year) ? 0 : year;
+    }
     return year >= minYear && year <= maxYear;
   });
 };
@@ -212,9 +274,18 @@ export const getUniqueGenres = (tracks) => {
 
 /**
  * Get year range from tracks
+ * Handles both mock data (year) and Spotify API (album.release_date)
  */
 export const getYearRange = (tracks) => {
-  const years = tracks.map(track => track.year || 0).filter(year => year > 0);
+  const years = tracks.map(track => {
+    if (track.year) return track.year;
+    if (track.album?.release_date) {
+      const year = parseInt(track.album.release_date.split('-')[0]);
+      return isNaN(year) ? 0 : year;
+    }
+    return 0;
+  }).filter(year => year > 0);
+  
   if (years.length === 0) return { min: 1950, max: new Date().getFullYear() };
   
   return {

@@ -30,6 +30,7 @@ export const RightPanel = () => {
   const setQueue = useStore((state) => state.setQueue);
   const reorderQueue = useStore((state) => state.reorderQueue);
   const playTrack = useStore((state) => state.playTrack);
+  const createPlaylist = useStore((state) => state.createPlaylist);
 
   const toggleSection = (section) => {
     setExpandedSections((prev) => ({ ...prev, [section]: !prev[section] }));
@@ -140,13 +141,18 @@ export const RightPanel = () => {
       <div className=" bottom-0 left-0 right-0 p-4 bg-spotify-dark border-t border-spotify">
         <div className="grid grid-cols-2 gap-2">
           <Button
-            onClick={() => {
+            onClick={async () => {
               if (stagingPool.length === 0) {
                 toast.error("Add items to staging pool first");
                 return;
               }
               const tracks = extractAllTracks(stagingPool);
               setQueue(tracks);
+              await createPlaylist({
+                name: "New Play",
+                description: "",
+                public: true,
+              });
               toast.success(`Queue created with ${tracks.length} tracks`);
             }}
             disabled={stagingPool.length === 0}

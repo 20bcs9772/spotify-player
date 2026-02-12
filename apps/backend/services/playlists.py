@@ -11,7 +11,7 @@ def create_playlist(data):
     }
     response = spotify_post("/me/playlists", body)
     if data.uris:
-        data["playlistId"] = response["id"]
+        data.playlistId = response["id"]
         add_tracks_to_playlist(data)
         return get_playlist_by_id(response["id"])
     else:
@@ -22,7 +22,7 @@ def add_tracks_to_playlist(data):
         "uris": data.uris,
         "position": data.position or 0
     }
-    return spotify_post(f"/playlists/{data.playlistId}/tracks", body)
+    return spotify_post(f"/playlists/{data.playlistId}/items", body)
 
 def get_playlist_by_id(playlistId:str):
-    return spotify_post(f"/playlists/{playlistId}")
+    return spotify_get(f"/playlists/{playlistId}")

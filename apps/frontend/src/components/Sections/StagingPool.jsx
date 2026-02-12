@@ -60,7 +60,7 @@ export const StagingPoolSection = ({
                         <GripVertical className="w-4 h-4 text-[#b3b3b3] flex-shrink-0" />
                       </div>
                       <img
-                        src={item.image}
+                        src={item.images?.[0]?.url || ""}
                         alt={item.name}
                         className={cn(
                           "w-10 h-10 object-cover flex-shrink-0",
@@ -68,15 +68,18 @@ export const StagingPoolSection = ({
                             ? "rounded-full"
                             : "rounded-md",
                         )}
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
                       />
                       <div className="flex-1 min-w-0">
                         <div className="text-sm font-medium text-white truncate">
                           {item.name}
                         </div>
                         <div className="text-xs text-[#b3b3b3] truncate">
-                          {item.type === "album" && item.artist}
+                          {item.type === "album" && (item.artists?.[0]?.name)}
                           {item.type === "artist" && "Artist"}
-                          {item.type === "playlist" && `By ${item.owner}`}
+                          {item.type === "playlist" && `By ${item.owner?.display_name || "Unknown"}`}
                         </div>
                       </div>
                       <Button
