@@ -9,7 +9,7 @@ import { create } from "zustand";
  */
 const useStore = create((set, get) => ({
   // Authentication
-  isAuthenticated: () => localStorage.getItem("isAuthenticated"),
+  isAuthenticated: () => localStorage.getItem("isAuthenticated") || false,
   accessToken: null,
   user: null,
 

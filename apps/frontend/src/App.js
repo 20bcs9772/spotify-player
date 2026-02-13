@@ -12,7 +12,7 @@ function App() {
   const isAuthenticated = useStore((state) => state.isAuthenticated);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
-  if (!isAuthenticated) {
+  if (!isAuthenticated()) {
     return (
       <>
         <LoginPage />
