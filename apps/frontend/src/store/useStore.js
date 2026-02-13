@@ -9,26 +9,25 @@ import { create } from "zustand";
  */
 const useStore = create((set, get) => ({
   // Authentication
-  isAuthenticated: false,
+  isAuthenticated: () => localStorage.getItem("isAuthenticated"),
   accessToken: null,
   user: null,
 
   login: async () => {
-    set({
-      isAuthenticated: true,
-    });
+    localStorage.setItem("isAuthenticated", true);
   },
 
-  logout: () =>
+  logout: () => {
+    localStorage.setItem("isAuthenticated", false);
     set({
-      isAuthenticated: false,
       accessToken: null,
       user: null,
       stagingPool: [],
       queue: [],
       currentTrack: null,
       selectedPlaylist: null,
-    }),
+    });
+  },
 
   // Selected Playlist for viewing
   selectedPlaylist: "home",
