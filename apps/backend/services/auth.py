@@ -1,4 +1,4 @@
-from config import SPOTIFY_ACCOUNT_URL, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REDIRECT_URI
+from config import SPOTIFY_ACCOUNT_URL, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, SPOTIFY_REDIRECT_URI, SPOTIFY_CLIENT_URL
 from fastapi.responses import RedirectResponse
 import requests
 import base64
@@ -43,4 +43,4 @@ def callback(code: str):
     TOKENS["access_token"] = token_data["access_token"]
     TOKENS["refresh_token"] = token_data["refresh_token"]
 
-    return {"message": "Login successful"}
+    return RedirectResponse(SPOTIFY_CLIENT_URL)

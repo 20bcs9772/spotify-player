@@ -2,14 +2,14 @@ import React from "react";
 import { Music2, Sparkles } from "lucide-react";
 import { Button } from "../ui/button";
 import useStore from "../../store/useStore";
-import { mockUser } from "../../utils/mockData";
+import { apiUrl } from "@/constants";
 
 export const LoginPage = () => {
   const login = useStore((state) => state.login);
 
   const handleLogin = () => {
-    const mockToken = "mock-access-token-" + Date.now();
-    login(mockToken, mockUser);
+    window.location.href = `${apiUrl}/auth/login`;
+    login();
   };
 
   return (

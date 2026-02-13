@@ -13,12 +13,11 @@ const useStore = create((set, get) => ({
   accessToken: null,
   user: null,
 
-  login: (token, userData) =>
+  login: async () => {
     set({
       isAuthenticated: true,
-      accessToken: token,
-      user: userData,
-    }),
+    });
+  },
 
   logout: () =>
     set({
@@ -145,9 +144,9 @@ const useStore = create((set, get) => ({
     set({ myPlaylists: response.items });
   },
   createPlaylist: async (data) => {
-    const {queue} = get();
-    const uris = queue.map(q => q.uri)
-    const response = await createPlaylistService({...data, uris});
+    const { queue } = get();
+    const uris = queue.map((q) => q.uri);
+    const response = await createPlaylistService({ ...data, uris });
     // Refresh playlists after creation
     const playlistsResponse = await getUserPlaylists();
     set({ myPlaylists: playlistsResponse.items });
